@@ -1,51 +1,47 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { Content } from "./components/content";
+import { Header } from "./components/header";
+import "./styles/index.css";
+import { User } from "./types";
+import { getFullName, getEmail, getNameByIndex } from "./utils";
+
 
 const Popup = () => {
-  const [count, setCount] = useState(0);
-  const [currentURL, setCurrentURL] = useState<string>();
+
+  const [currentUser, setCurrentUser] = useState<User>({
+    name: 'DeadHappy',
+    email: 'test@deadhappy.com',
+    firstName: 'Dead',
+    lastName: 'Happy'
+  });
 
   useEffect(() => {
-    chrome.action.setBadgeText({ text: count.toString() });
-  }, [count]);
-
-  useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      setCurrentURL(tabs[0].url);
-    });
+    getUserInfo();
+    console.log(currentUser);
   }, []);
 
-  const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
-  };
+  const getUserInfo = () => {  
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      console.log(`userInfo: ${JSON.stringify(userInfo)}`);
+      const { email } = userInfo;
+      const userName = getFullName(email);
+      let currentUserInfo = {
+          name: userName,
+          email: getEmail(userInfo),
+          firstName: getNameByIndex(userName, 0),
+          lastName: getNameByIndex(userName, 1),
+      } 
+      setCurrentUser(currentUserInfo);
+    }); 
+  }
+
 
   return (
-    <>
-      <ul style={{ minWidth: "700px" }}>
-        <li>Current URL: {currentURL}</li>
-        <li>Current Time: {new Date().toLocaleTimeString()}</li>
-      </ul>
-      <button
-        onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
-      >
-        count up
-      </button>
-      <button onClick={changeBackground}>change background</button>
-    </>
+    <div className="container w-[600px] h-auto mx-auto p-4">
+      <Header user={currentUser} />
+      <Content user={currentUser} />
+    </div>
   );
 };
 
