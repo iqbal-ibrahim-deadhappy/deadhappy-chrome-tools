@@ -7,7 +7,14 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
   const { user } = props;
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   
+  useEffect(()=>{
+    setInterval(()=>{
+      setCurrentTime(new Date().toLocaleTimeString())
+    }, 1000)
+  }, []);
+
   return (
     <>
       <div className="container grid grid-flow-col grid-cols-3 gap-4 items-center">
@@ -18,7 +25,7 @@ export const Header = (props: HeaderProps) => {
           <div className="font-bold">Welcome, <span className="font-medium">{user.firstName} {user.lastName}</span></div>
         </div>
         <div className="text-right">
-          <div className="text-right font-bold">{new Date().toLocaleTimeString()}</div>
+          <div className="text-right font-bold">{currentTime}</div>
           <div className="text-right font-bold">{new Date().toLocaleDateString()}</div>
         </div>
       </div>
