@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { User } from "../types";
+import Button from "./Button";
 
 interface RegistrationProps {
   user: User;
@@ -35,6 +36,6 @@ export const Registration = (props: RegistrationProps) => {
     }
 
   return (
-    <button className={`bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-full ${allowActions ? '' : 'disabled'}`} onClick={() => autofillRegistration()}>Autofill Registration</button>
+    <Button text="Autofill Registration" onClickHandler={autofillRegistration} />
   );
 };

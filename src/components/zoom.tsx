@@ -1,4 +1,5 @@
 import React from "react"
+import Button from "./Button";
 import NavigateTo from "./NavigateTo"
 
 type ZoomRoom = {
@@ -18,9 +19,9 @@ const ZoomRooms: ZoomRoom[] = [
 
 export const Zoom = () => {
     return (
-        <div className="container pb-4 p-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
+        <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
         {ZoomRooms.map((room: ZoomRoom) => (
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-full" onClick={() => NavigateTo(room.url, true)}>{room.name}</button>
+            <Button text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
         ))}
         </div>
     )

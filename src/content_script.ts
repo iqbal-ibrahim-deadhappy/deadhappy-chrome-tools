@@ -58,14 +58,41 @@ chrome.runtime.onMessage.addListener(async function (msg, sender, sendResponse) 
 
   if (action == "autofillRegistration") {
   const { email, firstName, lastName } = msg.user;
+  const newEmail = generateEmailAddress(email) 
+  const newUser = {
+    email: newEmail,
+    firstName,
+    lastName,
+    password: 'password'
+  }
 
-    fireEvent.change(selectors.email(), { target: { value: generateEmailAddress(email) } });
+    fireEvent.change(selectors.email(), { target: { value: newEmail} });
     fireEvent.change(selectors.firstName(), { target: { value: firstName } });
     fireEvent.change(selectors.lastName(), { target: { value: lastName } });
     fireEvent.change(selectors.password(), { target: { value: "password" } });
     fireEvent.change(selectors.passwordConf(), {
       target: { value: "password" },
     });
+
+    chrome.storage.sync.get('reg',
+      (items) => {
+        console.log('1 - get REG');
+          if (items.reg) {
+            console.log('2a - found REG');
+            console.log(JSON.stringify(items.reg));
+            chrome.storage.sync.set({reg: [{...items.reg}, newUser]}, function() {
+              console.log('3a - setting REG');
+              console.log('Value is set to ' + newUser);
+            });
+          } else {
+            console.log('2b - not found REG');
+            chrome.storage.sync.set({reg: newUser}, function() {
+              console.log('3b - setting REG');
+              console.log('Value is set to ' + newUser);
+            });
+          }
+      }
+    );
 
     await fireEvent.click(selectors.createAccount() as Element);
 

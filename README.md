@@ -1,29 +1,10 @@
-# Chrome Extension TypeScript Starter
+# DeadHappy Chrome Tools
 
-![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
-
-Chrome Extension, TypeScript and Visual Studio Code
+Chrome extension for common daily tasks written in TypeScript and React using Tailwind
 
 ## Prerequisites
 
 * [node + npm](https://nodejs.org/) (Current Version)
-
-## Option
-
-* [Visual Studio Code](https://code.visualstudio.com/)
-
-## Includes the following
-
-* TypeScript
-* Webpack
-* React
-* Jest
-* Example Code
-    * Chrome Storage
-    * Options Version 2
-    * content script
-    * count up badge number
-    * background
 
 ## Project Structure
 
@@ -52,15 +33,9 @@ npm run build
 npm run watch
 ```
 
-### Visual Studio Code
+## Load extension in Chrome
 
-Run watch mode.
-
-type `Ctrl + Shift + B`
-
-## Load extension to chrome
-
-Load `dist` directory
+In Chrome extensions, click 'Load Unpacked' and select the `dist` directory of this project.
 
 ## Test
-`npx jest` or `npm run test`
+`npm run test`

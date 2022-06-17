@@ -29,8 +29,8 @@ export const Actions = (props: ActionsProps) => {
   }, []);
   return (
     <>
-      <div className="p-2 pt-4 font-bold col-span-full truncate">Current URL: <span className="font-medium">{currentURL}</span></div>
-      <div className="container pb-4 p-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
+      <div className="py-2 pt-4 font-bold col-span-full truncate">Current URL: <span className="font-medium">{currentURL}</span></div>
+      <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
         <Deathwish user={user} />
         <Registration user={user} />
         <GetInsured user={user} />

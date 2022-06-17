@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User } from "../types";
 import { Actions } from "./actions";
 import { Navigation } from "./navigation";
+import { Registrations } from "./Registrations";
 import Tab from "./Tabs/Tab";
 import Tabs from "./Tabs/Tabs";
 import { Zoom } from "./zoom";
@@ -25,6 +26,9 @@ export const Content = (props: ContentProps) => {
           </Tab>
           <Tab title="Zoom">
             <Zoom />
+          </Tab>
+          <Tab title="Registrations">
+            <Registrations user={user} />
           </Tab>
         </Tabs>
       </>
