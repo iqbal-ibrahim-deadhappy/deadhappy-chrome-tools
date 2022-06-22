@@ -63,33 +63,35 @@ export const Registrations = (props: RegistrationsProps) => {
 
       return (
         <div className="container pb-4 py-2 grid grid-flow-row gap-4 w-full">
-          <table className="table-auto">
-            <thead className="text-left">
-              <tr>
-                <th>Email</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Password</th>
-                <th>Environment</th>
-                <th className="text-center">Login</th>
-              </tr>
-            </thead>
-            <tbody className="table-fixed items-center justify-between overflow-y-scroll h-48">
-              {registrations && registrations.map((reg: Registration) => (
-                <tr key={reg.id}>
-                  <td>{reg.email}</td>
-                  <td>{reg.firstName}</td>
-                  <td>{reg.lastName}</td>
-                  <td>{reg.password}</td>
-                  <td className="text-center">{getEnvironmentFromEmail(reg.email)}</td>
-                  <td className="text-center"><Button text="Login" onClickHandler={() => login(reg)} /></td>
+          <div className="w-full overflow-y-scroll" style={{'height': '300px'}}>
+            <table className="relative table-auto w-full">
+              <thead className="bg-white sticky top-0 text-left py-2 z-50 border-spacing-y-1 mb-2">
+                <tr>
+                  <th>Email</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Password</th>
+                  <th>Environment</th>
+                  <th className="text-center">Login</th>
                 </tr>
-              ))}
-              {!registrations &&
-                <div className="text-black">Sorry, no registrations found.</div>
-              }
-            </tbody>
-            </table>
+              </thead>
+              <tbody className="relative top-0 items-center justify-between overflow-y-scroll max-h-48 h-48">
+                {registrations && registrations.map((reg: Registration) => (
+                  <tr key={reg.id}>
+                    <td>{reg.email}</td>
+                    <td>{reg.firstName}</td>
+                    <td>{reg.lastName}</td>
+                    <td>{reg.password}</td>
+                    <td className="text-center">{getEnvironmentFromEmail(reg.email)}</td>
+                    <td className="text-center"><Button text="Login" onClickHandler={() => login(reg)} /></td>
+                  </tr>
+                ))}
+                {!registrations &&
+                  <div className="text-black">Sorry, no registrations found.</div>
+                }
+              </tbody>
+              </table>
+            </div>
             <Button onClickHandler={clearRegistrations} text="Clear Registrations" key="clearReg" />
         </div> 
       )
