@@ -3,6 +3,7 @@ import { User } from "../types";
 import { Deathwish } from "./deathwishes";
 import { GetInsured } from "./getInsured";
 import { Registration } from "./registration";
+import { Stripe } from "./Stripe";
 
 interface ActionsProps {
   user: User;
@@ -34,6 +35,7 @@ export const Actions = (props: ActionsProps) => {
         <Deathwish user={user} />
         <Registration user={user} />
         <GetInsured user={user} />
+        <Stripe user={user} />
       </div>
     </>
   );

@@ -18,7 +18,7 @@ const TabTitle: React.FC<TabTitleProps> = ({ title, setSelectedTab, index, isAct
         isActive
           ? 'bg-pink-500 text-white'
           : 'text-gray-500 hover:text-gray-700'
-      } w-1/2 md:w-auto focus:outline-none cursor-pointer border-transparent py-2 px-1 border-b-2 font-medium text-sm`}
+      } w-full focus:outline-none cursor-pointer border-transparent py-2 px-3 border-b-2 font-medium text-sm`}
     >
       {title}
     </button>

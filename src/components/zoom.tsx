@@ -21,7 +21,7 @@ export const Zoom = () => {
     return (
         <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
         {ZoomRooms.map((room: ZoomRoom) => (
-            <Button text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
+            <Button key={room.name} text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
         ))}
         </div>
     )

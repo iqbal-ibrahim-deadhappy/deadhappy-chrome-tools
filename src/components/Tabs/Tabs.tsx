@@ -35,7 +35,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
       <div className="w-full my-2">
         <div className="sm:block">
           <div className="border-y border-gray-200">
-            <nav className="-mb-px flex space-x-8" aria-label="Tabs" data-testid="tab-buttons">
+            <nav className="-mb-px flex justify-between" aria-label="Tabs" data-testid="tab-buttons">
             {children.map((item, index) => (
               <TabTitle index={index} key={index} title={item.props.title} setSelectedTab={(index) => setSelectedTabHandler(index)} isActive={selectedTab === index}/>
             ))}

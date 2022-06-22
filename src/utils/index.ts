@@ -15,3 +15,8 @@ export const capitalizeWord = (word: string) => {
 export const getNameByIndex = (name: string, index: number) => {
   return capitalizeWord(name.split(" ")[index]);
 }
+
+export const getEnvironmentFromEmail = (email: string) => {
+  if (!email) return 'dev';
+  return email.split("+")[1].split("-")[0];
+}

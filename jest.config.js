@@ -7,6 +7,6 @@ module.exports = {
     transform: {
         "^.+\\.ts$": "ts-jest"
     },
-    transformIgnorePatterns: ["/node_modules/", "/build/"],
-    setupFilesAfterEnv: [ "@testing-library/jest-dom/extend-expect" ]
+    transformIgnorePatterns: ["<rootDir>/node_modules/", "/build/"],
+    setupFilesAfterEnv: [ "<rootDir>/setupTests.js" ]
 }; 

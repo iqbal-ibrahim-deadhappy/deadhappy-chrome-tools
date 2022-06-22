@@ -38,7 +38,7 @@ const Popup = () => {
 
 
   return (
-    <div className="container w-[600px] h-auto mx-auto p-4">
+    <div className="container w-[800px] h-auto mx-auto p-4">
       <Header user={currentUser} />
       <Content user={currentUser} />
     </div>
