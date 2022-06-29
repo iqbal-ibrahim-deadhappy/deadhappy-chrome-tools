@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from "@testing-library/react";
+import { screen, fireEvent, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import { User } from "./types";
 
 const selectors = {
@@ -25,14 +25,28 @@ const selectors = {
   getInsured: {
     dateOfBirth: () => screen.getByTestId("dob-input"),
     getInsuredButton: () => screen.getByTestId('getInsured-button'),
-    isSmoker: () => screen.getByRole('radio', { name: "is_smoker" }),
+    isSmoker: () => screen.getByLabelText("No"),
+    crackOnButton: () => screen.getByTestId("underwriting-button"),
+    question1StartIndicator: () => screen.findByText('Question 1 of 4'),
+    question1Indicator: () => screen.findByRole("textbox", { name: /underwriting_answer_1/i}),
+    question2Indicator: () => screen.findByRole("textbox", { name: /underwriting_answer_2/i}),
+    question3Indicator: () => screen.findByRole("textbox", { name: /underwriting_answer_3/i}),
+    question4Indicator: () => screen.findByRole("textbox", { name: /underwriting_answer_4/i}),
+    question1: () => screen.getByTestId("option-no"),
+    question2: () => screen.getByTestId("option-no"),
+    question3: () => screen.getByTestId("option-no"),
+    question4: () => screen.getByTestId("option-no"),
+    nextQuestionButton: () => screen.getByTestId("next-button"),
+    finishButton: () => screen.findByTestId("submit-button"),
   },
   stripe: {
     cardNumber: () => screen.getByLabelText('Card number'),
     expiry: () => screen.getByLabelText('Expiry'),
     cvc: () => screen.getByPlaceholderText('CVC'),
-    name: () => screen.getByRole("text", { name: 'billingName'}),
-    addressLine1: () => screen.getByLabelText('Address'),
+    name: () => screen.getByRole("textbox", { name: /Name on card/i}),
+    addressLine1: () => screen.getByLabelText('Address line 1'),
+    addressAutocomplete: () => screen.findByLabelText('1 Mansfield Street, Leicester, UK'),
+    enterAddressManuallyButton: () => screen.findByText('Enter address manually'),
     city: () => screen.getByLabelText('Town or city'),
     postcode: () => screen.getByLabelText('Postal code'),
     subscribe: () => screen.getByTestId('hosted-payment-submit-button')
@@ -115,19 +129,55 @@ chrome.runtime.onMessage.addListener(async function (msg, sender, sendResponse) 
       }
     );
 
-    await fireEvent.click(selectors.registration.createAccount() as Element);
-
-    await waitFor(() =>
-      expect(window.location.href).toEqual(
-        "http://rih.testing.deadhappy.io/setup-steps/get-insured"
-      )
-    );
+    fireEvent.click(selectors.registration.createAccount() as Element);
   }
 
-  if (action == "autofillGetInsured") {
+  if (action == "autofillGetInsuredStep1") {
+    // Step 1
     fireEvent.change(selectors.getInsured.dateOfBirth(), { target: { value: '20/10/2000' } });
-    fireEvent.click(selectors.getInsured.isSmoker(), { target: { checked: true }});
+    fireEvent.click(selectors.getInsured.isSmoker());
     await fireEvent.click(selectors.getInsured.getInsuredButton() as Element);
+  }
+
+  if (action == "autofillGetInsuredStep2") {
+    // Step 2
+
+    // Crack on
+    await waitFor(() => selectors.getInsured.crackOnButton());
+    fireEvent.click(selectors.getInsured.crackOnButton() as Element);
+    await new Promise((r) => setTimeout(r, 1250));
+
+    // Question 1 start
+    fireEvent.click(selectors.getInsured.question1());
+    await new Promise((r) => setTimeout(r, 1250));
+    fireEvent.click(selectors.getInsured.nextQuestionButton() as Element);
+    // Question 1 end
+    
+    await new Promise((r) => setTimeout(r, 1250));
+
+    // Question 2 start
+    fireEvent.click(selectors.getInsured.question2());
+    await new Promise((r) => setTimeout(r, 1250));
+    fireEvent.click(selectors.getInsured.nextQuestionButton() as Element);
+    // Question 2 end
+    
+    await new Promise((r) => setTimeout(r, 1250));
+
+    // Question 3 start
+    fireEvent.click(selectors.getInsured.question3());
+    await new Promise((r) => setTimeout(r, 1250));
+    fireEvent.click(selectors.getInsured.nextQuestionButton() as Element);
+    // Question 3 end
+    
+    await new Promise((r) => setTimeout(r, 1250));
+
+    // Question 4 start
+    fireEvent.click(selectors.getInsured.question4());
+    await new Promise((r) => setTimeout(r, 1250));
+    waitFor(async () => fireEvent.click(await selectors.getInsured.finishButton() as Element));
+    // Question 4 end
+
+    await new Promise((r) => setTimeout(r, 1250));
   }
 
   if (action == "autofillDeathwish") {
@@ -147,15 +197,11 @@ chrome.runtime.onMessage.addListener(async function (msg, sender, sendResponse) 
     fireEvent.change(selectors.stripe.expiry(), { target: { value: '0125' } });
     fireEvent.change(selectors.stripe.cvc(), { target: { value: '123' } });
     fireEvent.change(selectors.stripe.name(), { target: { value: 'DeadHappy' } });
+    fireEvent.click(await selectors.stripe.enterAddressManuallyButton() as unknown as Element);
     fireEvent.change(selectors.stripe.addressLine1(), { target: { value: '1 Mansfield Street' } });
     fireEvent.change(selectors.stripe.city(), { target: { value: 'Leicester' } });
     fireEvent.change(selectors.stripe.postcode(), { target: { value: 'LE1 1DH' } });
-    //await fireEvent.click(selectors.stripe.subscribe() as Element);
-    // await waitFor(() =>
-    //   expect(window.location.href).toEqual(
-    //     "https://products.dev.deadhappy.io/payment/success"
-    //   )
-    // );
+    fireEvent.click(selectors.stripe.subscribe() as Element);
   }
 
   if (action == "login") {
