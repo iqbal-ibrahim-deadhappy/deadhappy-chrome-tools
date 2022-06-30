@@ -1,6 +1,7 @@
 import React from "react"
 import Button from "./Button";
 import NavigateTo from "./NavigateTo"
+import { copyTextToClipboard } from "../utils";
 
 type ZoomRoom = {
     url: string;
@@ -22,7 +23,10 @@ export const Zoom = () => {
         <>
         <h3 className="font-bold">Meeting/Pairing Time!</h3><p>No more will you say 'please send me the Zoom link'!</p><div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
             {ZoomRooms.map((room: ZoomRoom) => (
-                <Button key={room.name} text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
+                <div className="flex w-full">
+                    <Button key={room.name} text={room.name} onClickHandler={() => NavigateTo(room.url, true)} className="w-full h-8 rounded-r-none"/>
+                    <img src="/assets/copy-icon.svg" className="w-8 h-8 p-2 rounded-r-sm inline hover:cursor-pointer bg-pink-500 text-white fill-white" onClick={() => copyTextToClipboard(room.url)}/>
+                </div>
             ))}
         </div>
         </>
