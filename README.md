@@ -38,4 +38,6 @@ npm run watch
 In Chrome extensions, click 'Load Unpacked' and select the `dist` directory of this project.
 
 ## Test
-`npm run test`
+```
+npm run test
+```
