@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { User } from "../types";
-import { getEnvironmentFromEmail } from "../utils";
+import { getEnvironmentFromEmail, copyTextToClipboard } from "../utils";
 import Button from "./Button";
 import NavigateTo from "./NavigateTo";
 
@@ -75,15 +75,18 @@ export const Registrations = (props: RegistrationsProps) => {
                   <th className="text-center">Login</th>
                 </tr>
               </thead>
-              <tbody className="relative top-0 items-center justify-between overflow-y-scroll max-h-48 h-48">
+              <tbody className="overflow-y-scroll">
                 {registrations && registrations.map((reg: Registration) => (
                   <tr key={reg.id}>
-                    <td>{reg.email}</td>
+                    <td onClick={() => copyTextToClipboard(reg.email)}>
+                      <img src="/assets/copy-icon.svg" className="w-4 h-4 inline mr-1 hover:cursor-pointer"/>
+                      {reg.email}
+                    </td>
                     <td>{reg.firstName}</td>
                     <td>{reg.lastName}</td>
                     <td>{reg.password}</td>
                     <td className="text-center">{getEnvironmentFromEmail(reg.email)}</td>
-                    <td className="text-center"><Button text="Login" onClickHandler={() => login(reg)} /></td>
+                    <td className="text-center"><Button text="Login" onClickHandler={() => login(reg)} className="py-0.5" /></td>
                   </tr>
                 ))}
                 {!registrations &&
