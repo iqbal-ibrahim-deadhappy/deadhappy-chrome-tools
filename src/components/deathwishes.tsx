@@ -4,11 +4,11 @@ import Button from "./Button";
 
 interface DeathwishProps {
   user: User;
+  currentURL?: string;
 }
 
 export const Deathwish = (props: DeathwishProps) => {
-  const { user } = props;
-  //const { userEmail, firstName, lastName } = currentUserInfo;
+  const { user, currentURL } = props;
 
     const autofillDeathwish = () => {
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -28,6 +28,6 @@ export const Deathwish = (props: DeathwishProps) => {
     }
 
   return (
-      <Button text="Autofill Deathwish" onClickHandler={autofillDeathwish} />
+      <Button text="Autofill Deathwish" onClickHandler={autofillDeathwish} disabled={currentURL?.indexOf('deathwish') == -1 || currentURL?.indexOf('store') == -1} />
   );
 };

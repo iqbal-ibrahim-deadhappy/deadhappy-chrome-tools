@@ -4,10 +4,11 @@ import Button from "./Button";
 
 interface RegistrationProps {
   user: User;
+  currentURL?: string;
 }
 
 export const Registration = (props: RegistrationProps) => {
-  const { user } = props;
+  const { user, currentURL: currentUrl } = props;
   //const { userEmail, firstName, lastName } = currentUserInfo;
   const [currentURL, setCurrentURL] = useState<string>();
   let allowActions;
@@ -36,6 +37,6 @@ export const Registration = (props: RegistrationProps) => {
     }
 
   return (
-    <Button text="Autofill Registration" onClickHandler={autofillRegistration} />
+    <Button text="Autofill Registration" onClickHandler={autofillRegistration} disabled={currentURL?.indexOf('/account/create') == -1}/>
   );
 };

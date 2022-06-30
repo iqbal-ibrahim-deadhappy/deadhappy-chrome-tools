@@ -4,10 +4,11 @@ import Button from "./Button";
 
 interface StripeProps {
   user: User;
+  currentURL?: string;
 }
 
 export const Stripe = (props: StripeProps) => {
-  const { user } = props;
+  const { user, currentURL } = props;
   //const { userEmail, firstName, lastName } = currentUserInfo;
 
     const autofillStripe = () => {
@@ -28,6 +29,6 @@ export const Stripe = (props: StripeProps) => {
     }
 
   return (
-    <Button text="Autofill Stripe" onClickHandler={autofillStripe} />
+    <Button text="Autofill Stripe" onClickHandler={autofillStripe} disabled={currentURL?.indexOf('checkout.stripe.com') == -1} />
   );
 };

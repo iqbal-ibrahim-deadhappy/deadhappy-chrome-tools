@@ -4,10 +4,11 @@ import Button from "./Button";
 
 interface GetInsuredProps {
   user: User;
+  currentURL?: string;
 }
 
 export const GetInsured = (props: GetInsuredProps) => {
-  const { user } = props;
+  const { user, currentURL } = props;
   //const { userEmail, firstName, lastName } = currentUserInfo;
 
     const autofillGetInsured = (step: string) => {
@@ -29,8 +30,8 @@ export const GetInsured = (props: GetInsuredProps) => {
 
   return (
     <>
-      <Button text="Autofill GetInsured Step 1" onClickHandler={() => autofillGetInsured('Step1')} />
-      <Button text="Autofill GetInsured Step 2" onClickHandler={() => autofillGetInsured('Step2')} />
+      <Button text="Autofill GetInsured Step 1" onClickHandler={() => autofillGetInsured('Step1')} disabled={currentURL?.indexOf('setup-steps/get-insured') == -1}/>
+      <Button text="Autofill GetInsured Step 2" onClickHandler={() => autofillGetInsured('Step2')} disabled={currentURL?.indexOf('setup-steps/underwriting-step') == -1}/>
     </>
   );
 };
