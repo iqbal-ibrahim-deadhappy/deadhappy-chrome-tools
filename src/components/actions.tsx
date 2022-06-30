@@ -35,7 +35,7 @@ export const Actions = (props: ActionsProps) => {
       <div className="py-2 pt-4 font-bold col-span-full truncate">Current URL: <span className="font-medium">{currentURL}</span></div>
       <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
         <Deathwish user={user} currentURL={currentURL}/>
-        <Registration user={user} currentURL={currentURL}/>
+        <Registration user={user}/>
         <GetInsured user={user} currentURL={currentURL}/>
         <Stripe user={user} currentURL={currentURL}/>
       </div>
