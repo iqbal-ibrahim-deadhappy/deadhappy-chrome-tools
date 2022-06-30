@@ -19,10 +19,12 @@ const ZoomRooms: ZoomRoom[] = [
 
 export const Zoom = () => {
     return (
-        <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
-        {ZoomRooms.map((room: ZoomRoom) => (
-            <Button key={room.name} text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
-        ))}
+        <>
+        <h3 className="font-bold">Meeting/Pairing Time!</h3><p>No more will you say 'please send me the Zoom link'!</p><div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
+            {ZoomRooms.map((room: ZoomRoom) => (
+                <Button key={room.name} text={room.name} onClickHandler={() => NavigateTo(room.url, true)} />
+            ))}
         </div>
+        </>
     )
 }
