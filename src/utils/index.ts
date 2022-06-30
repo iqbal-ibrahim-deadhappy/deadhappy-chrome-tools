@@ -20,3 +20,9 @@ export const getEnvironmentFromEmail = (email: string) => {
   if (!email) return 'dev';
   return email.split("+")[1].split("-")[0];
 }
+
+export async function copyTextToClipboard(text: string) {
+  if ('clipboard' in navigator) {
+    return await navigator.clipboard.writeText(text);
+  }
+}
