@@ -2,20 +2,21 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import TabTitle from './TabTitle';
 
 interface TabsProps {
-  children: ReactElement[]
+  children: ReactElement[],
+  tabsetName: string
 }
 
-const Tabs: React.FC<TabsProps> = ({ children }) => {
+const Tabs: React.FC<TabsProps> = ({ tabsetName, children }) => {
   const [selectedTab, setSelectedTab] = useState(0)
 
   useEffect(() => {
     // Restores select box and checkbox state using the preferences
     // stored in chrome.storage.
-    chrome.storage.sync.get('tabIndex',
+    chrome.storage.sync.get(tabsetName,
       (items) => {
           if (items) {
-            console.log(`tabIndex found : ${items.tabIndex}`);
-            setSelectedTab(Number(items.tabIndex));
+            console.log(`${tabsetName} found : ${items[tabsetName]}`);
+            setSelectedTab(Number(items[tabsetName]));
           } else {
             setSelectedTab(0);
           }
@@ -25,8 +26,8 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
 
   const setSelectedTabHandler = (index: number) => {
     setSelectedTab(index);
-    chrome.storage.sync.set({tabIndex: index}, function() {
-      console.log(`setting tabIndex to ${index}`);
+    chrome.storage.sync.set({[tabsetName]: index}, function() {
+      console.log(`setting ${tabsetName} to ${index}`);
     });
   }
 

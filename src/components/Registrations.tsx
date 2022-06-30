@@ -77,7 +77,7 @@ export const Registrations = (props: RegistrationsProps) => {
               </thead>
               <tbody className="overflow-y-scroll">
                 {registrations && registrations.map((reg: Registration) => (
-                  <tr key={reg.id}>
+                  <tr key={reg.email}>
                     <td onClick={() => copyTextToClipboard(reg.email)}>
                       <img src="/assets/copy-icon.svg" className="w-4 h-4 inline mr-1 hover:cursor-pointer"/>
                       {reg.email}

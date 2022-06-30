@@ -6,7 +6,7 @@ import { Registrations } from "./Registrations";
 import Tab from "./Tabs/Tab";
 import Tabs from "./Tabs/Tabs";
 import { Zoom } from "./zoom";
-
+import { Resources } from "./resources";
 
 interface ContentProps {
   user: User;
@@ -17,7 +17,7 @@ export const Content = (props: ContentProps) => {
 
   return (
       <>
-        <Tabs>
+        <Tabs tabsetName="tabIndex">
           <Tab title="Navigation">
             <Navigation user={user} />
           </Tab>
@@ -29,6 +29,9 @@ export const Content = (props: ContentProps) => {
           </Tab>
           <Tab title="Registrations">
             <Registrations user={user} />
+          </Tab>
+          <Tab title="Resources">
+            <Resources />
           </Tab>
         </Tabs>
       </>
