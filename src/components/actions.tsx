@@ -30,6 +30,8 @@ export const Actions = (props: ActionsProps) => {
   }, []);
   return (
     <>
+      <h3 className="font-bold">Fancy some autofill magic?</h3>
+      <p>You can autofill those forms to make the journey easy.</p>
       <div className="py-2 pt-4 font-bold col-span-full truncate">Current URL: <span className="font-medium">{currentURL}</span></div>
       <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
         <Deathwish user={user} />

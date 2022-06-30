@@ -20,6 +20,8 @@ export const Navigation = (props: NavigationProps) => {
 
   return (
     <>
+        <h3 className="font-bold">Navigate to wherever you like...</h3>
+        <p>Select an environment, choose your platform, and hit GO!</p>
         <div className="container pb-4 py-2 grid grid-flow-row grid-cols-3 gap-4 w-full">
             <select
                 defaultValue={environment} 

@@ -62,8 +62,9 @@ export const Registrations = (props: RegistrationsProps) => {
       };
 
       return (
-        <div className="container pb-4 py-2 grid grid-flow-row gap-4 w-full">
-          <div className="w-full overflow-y-scroll" style={{'height': '300px'}}>
+        <>
+        <h3 className="font-bold">Saved registrations</h3><p>These are saved registration details so you can 'confirm email' via the DB (dev only) and log back in later. For testing purposes only of course.</p><div className="container pb-4 py-2 grid grid-flow-row gap-4 w-full">
+          <div className="w-full overflow-y-scroll" style={{ 'height': '300px' }}>
             <table className="relative table-auto w-full">
               <thead className="bg-white sticky top-0 text-left py-2 z-50 border-spacing-y-1 mb-2">
                 <tr>
@@ -79,7 +80,7 @@ export const Registrations = (props: RegistrationsProps) => {
                 {registrations && registrations.map((reg: Registration) => (
                   <tr key={reg.email}>
                     <td onClick={() => copyTextToClipboard(reg.email)}>
-                      <img src="/assets/copy-icon.svg" className="w-4 h-4 inline mr-1 hover:cursor-pointer"/>
+                      <img src="/assets/copy-icon.svg" className="w-4 h-4 inline mr-1 hover:cursor-pointer" />
                       {reg.email}
                     </td>
                     <td>{reg.firstName}</td>
@@ -90,12 +91,12 @@ export const Registrations = (props: RegistrationsProps) => {
                   </tr>
                 ))}
                 {!registrations &&
-                  <div className="text-black">Sorry, no registrations found.</div>
-                }
+                  <div className="text-black">Sorry, no registrations found.</div>}
               </tbody>
-              </table>
-            </div>
-            <Button onClickHandler={clearRegistrations} text="Clear Registrations" key="clearReg" />
-        </div> 
+            </table>
+          </div>
+          <Button onClickHandler={clearRegistrations} text="Clear Registrations" key="clearReg" />
+        </div>
+        </> 
       )
 }
