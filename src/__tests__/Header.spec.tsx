@@ -11,6 +11,13 @@ const user: User = {
 }
 
 describe('Header', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ number: 100 }),
+      }),
+    ) as jest.Mock;
+  })
     it('should render', () => {
       render(
         <Header user={user}/>,
