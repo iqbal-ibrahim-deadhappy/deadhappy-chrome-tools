@@ -59,6 +59,7 @@ export const Registrations = (props: RegistrationsProps) => {
         chrome.storage.sync.remove('reg', () => {
           console.log('removed REG registrations');
         });
+        setRegistrations([])
       };
 
       return (
