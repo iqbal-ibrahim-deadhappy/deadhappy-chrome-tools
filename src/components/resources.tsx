@@ -3,6 +3,7 @@ import Button from "./Button";
 import NavigateTo from "./NavigateTo"
 import Tab from "./Tabs/Tab";
 import Tabs from "./Tabs/Tabs";
+import GitlabStats from "./gitlab";
 
 type Resource = {
     url: string;
@@ -29,6 +30,9 @@ export const Resources = () => {
     return (
         <Tabs tabsetName="resourcesTabIndex">
             <Tab title="Gitlab">
+                <div className="container pb-4 py-2 gap-4 w-full">
+                    <GitlabStats />
+                </div>
                 <div className="container pb-4 py-2 grid grid-flow-row grid-cols-6 gap-4 w-full">
                 {GitlabResources.map((resource: Resource) => (
                     <Button key={resource.name} text={resource.name} onClickHandler={() => NavigateTo(resource.url, true)} />
