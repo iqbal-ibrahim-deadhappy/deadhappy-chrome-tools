@@ -6,6 +6,8 @@ const gitlabStats = () => {
 
     const [gpat, setGpat] = useState('');
     const [gitData, setGitData] = useState([]);
+    const [openMrs, setOpenMrs] = useState(0);
+    const [error, setError] = useState();
 
     useEffect(() => {
       chrome.storage.sync.get(
@@ -20,35 +22,44 @@ const gitlabStats = () => {
       .then(response => response.json())
       .then(data => {
           setGitData(data);
+          setOpenMrs(data.length)
+      })
+      .catch((err) => {
+        setError(err.error)
       });
     })
   
 
     return (
         <div>
-            <h3 className="font-bold">Open MRs</h3>
-            <div className="container pb-4 py-2 grid grid-flow-row gap-4 w-full">
-            <div className="w-full overflow-y-scroll h-48">
+            {error &&
+                <div className="bg-red-500 w-full p-2 text-white">{error}</div>}
+            {!error && (
+                <>
+                <h3 className="font-bold">Open MRs: {openMrs}</h3><div className="container pb-4 py-2 grid grid-flow-row gap-4 w-full">
+                <div className="w-full overflow-y-scroll h-48">
                     <table className="relative table-auto w-full">
-                      <thead className="bg-white sticky top-0 text-left py-2 z-50 border-spacing-y-1 mb-2">
-                        <tr>
-                          <th>Title</th>
-                          <th>Created At</th>
-                          <th className="text-center">View</th>
-                        </tr>
-                      </thead>
-                      <tbody className="overflow-y-scroll">
-                        {gitData.map((mr) => (
-                            <tr key={mr.id}>
-                                <td>{mr.title}</td>
-                                <td>{new Date(mr.created_at).toLocaleDateString()}</td>
-                                <td className="text-center"><Button text="Go" onClickHandler={() => NavigateTo(mr.web_url, true)} className="py-0.5" /></td>
+                        <thead className="bg-white sticky top-0 text-left py-2 z-50 border-spacing-y-1 mb-2">
+                            <tr>
+                                <th>Title</th>
+                                <th>Created At</th>
+                                <th className="text-center">View</th>
                             </tr>
-                        ))}
+                        </thead>
+                        <tbody className="overflow-y-scroll">
+                            {!error && gitData && gitData.map((mr) => (
+                                <tr key={mr.id}>
+                                    <td>{mr.title}</td>
+                                    <td>{new Date(mr.created_at).toLocaleDateString()}</td>
+                                    <td className="text-center"><Button text="Go" onClickHandler={() => NavigateTo(mr.web_url, true)} className="py-0.5" /></td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
-                  </div>
+                </div>
             </div>
+            </>
+            )}
         </div>
     )
 }
