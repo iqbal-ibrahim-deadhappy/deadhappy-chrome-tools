@@ -37,8 +37,8 @@ export const Navigation = (props: NavigationProps) => {
             <select defaultValue={platform} className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-sm" id="platform" onChange={(event) => { setPlatform(event.target.value) }}>
                 <option value="deathwish">Deathwish Store</option>
                 <option value="products">Products</option>
-                <option value="my.deadhappy">My DeadHappy</option>
-                <option value="deadhappy" disabled={environment !== 'prd'}>DeadHappy</option>
+                <option value="my">My DeadHappy</option>
+                <option value="" disabled={environment !== 'prd'}>DeadHappy</option>
                 <option value="nova" disabled={environment !== 'prd'}>Nova</option>
             </select>
             <Button text="GO!" onClickHandler={() => NavigateTo(buildURL())} />
